@@ -5,7 +5,7 @@ server {
         client_max_body_size 1000M;
         server_name your.com www.your.com;
         index index.php index.html index.htm;
-        root /var/www/html/hcis/sw-admin;
+        root /var/www/html/your;
 
         access_log /var/log/nginx/your-access.log;
         error_log /var/log/nginx/your-error.log;
