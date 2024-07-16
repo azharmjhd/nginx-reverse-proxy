@@ -1,0 +1,29 @@
+server {
+        listen 443 ssl http2;
+        listen [::]:443 ssl http2;
+
+        client_max_body_size 1000M;
+        server_name your.com www.your.com;
+        index index.php index.html index.htm;
+        root /var/www/html/hcis/sw-admin;
+
+        access_log /var/log/nginx/your-access.log;
+        error_log /var/log/nginx/your-error.log;
+
+        ssl on;
+        ssl_certificate /etc/nginx/ssl/your.crt;  #can use .pem
+        ssl_certificate_key /etc/nginx/ssl/your.key; #can use .pem
+        ssl_prefer_server_ciphers on;
+
+        add_header Strict-Transport-Security max-age=41536000;
+        location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+        location ~ /\.ht {
+        deny all;
+    }
+}
